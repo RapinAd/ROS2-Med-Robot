@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'cmd_to_pwm_driver = med_bot.cmd_to_pwm_driver:main',
+            'open_box = med_bot.open_box:main',
         ],
     },
 )
