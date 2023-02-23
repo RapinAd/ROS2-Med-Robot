@@ -1,16 +1,18 @@
-# Importing modules and classes
 import time
 import numpy as np
 from gpiozero import RotaryEncoder
-
+import RPi.GPIO as GPIO
+ 
 # Assigning parameter values
 ppr = 400  # Pulses Per Revolution of the encoder
 tstop = 20  # Loop execution duration (s)
 tsample = 0.02  # Sampling period for code execution (s)
 tdisp = 0.5  # Sampling period for values display (s)
 
-# Creating encoder object using GPIO pins 24 and 25
-encoder = RotaryEncoder(14, 15, max_steps=0)
+
+
+
+encoder = RotaryEncoder(17, 27, max_steps=0)
 
 # Initializing previous values and starting main clock
 anglecurr = 0

@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
             'cmd_to_pwm_driver = med_bot.cmd_to_pwm_driver:main',
             'open_box = med_bot.open_box:main',
+            'pid_speed_motor = med_bot.pid_speed_motor:main',
         ],
     },
 )

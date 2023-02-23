@@ -13,11 +13,11 @@ class VelocitySubscriber(Node):  # MODIFY NAME
             Twist, "cmd_vel", self.cmd_to_pwm_callback, 10)
         self.get_logger().info("--Command Velocity Node has been started--")
         #PIN NUMBER
-        self.right_motor_dir = 13
-        self.right_motor_pwm = 19
+        self.right_motor_dir = 5
+        self.right_motor_pwm = 6
 
-        self.left_motor_dir = 5
-        self.left_motor_pwm = 6
+        self.left_motor_dir = 16
+        self.left_motor_pwm = 26
 
         #GPIO SETUP
         GPIO.setmode(GPIO.BCM)
@@ -38,29 +38,29 @@ class VelocitySubscriber(Node):  # MODIFY NAME
         print("forward")
         self.pwm_r.ChangeDutyCycle(vel_R*100)
         self.pwm_l.ChangeDutyCycle(vel_L*100)
-        GPIO.output(self.right_motor_dir ,GPIO.HIGH)
-        GPIO.output(self.left_motor_dir,GPIO.HIGH)
+        GPIO.output(self.right_motor_dir ,GPIO.LOW)
+        GPIO.output(self.left_motor_dir,GPIO.LOW)
 
     def reverse(self,vel_R,vel_L):
         print("reverse")
         self.pwm_r.ChangeDutyCycle(vel_R*100)
         self.pwm_l.ChangeDutyCycle(vel_L*100)
-        GPIO.output(self.right_motor_dir ,GPIO.LOW)
-        GPIO.output(self.left_motor_dir,GPIO.LOW)
+        GPIO.output(self.right_motor_dir ,GPIO.HIGH)
+        GPIO.output(self.left_motor_dir,GPIO.HIGH)
 
     def left(self,vel_R,vel_L):
         print("left")
         self.pwm_r.ChangeDutyCycle(vel_R*100)
         self.pwm_l.ChangeDutyCycle(vel_L*100)
-        GPIO.output(self.right_motor_dir, GPIO.HIGH)
-        GPIO.output(self.left_motor_dir,GPIO.LOW)
+        GPIO.output(self.right_motor_dir, GPIO.LOW)
+        GPIO.output(self.left_motor_dir,GPIO.HIGH)
 
     def right(self,vel_R,vel_L):
         print("right")
         self.pwm_r.ChangeDutyCycle(vel_R*100)
         self.pwm_l.ChangeDutyCycle(vel_L*100)
-        GPIO.output(self.right_motor_dir, GPIO.LOW)
-        GPIO.output(self.left_motor_dir,GPIO.HIGH)
+        GPIO.output(self.right_motor_dir, GPIO.HIGH)
+        GPIO.output(self.left_motor_dir,GPIO.LOW)
 
     def stop(self):
         print("stop")
