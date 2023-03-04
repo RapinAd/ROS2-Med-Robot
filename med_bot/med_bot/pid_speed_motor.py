@@ -19,17 +19,17 @@ class PIDController(Node): # MODIFY NAME
         
     
         # Define Pin
-        self.left_motor_dir = 5
-        self.left_motor_pwm = 6
+        self.left_motor_dir = 26
+        self.left_motor_pwm = 13
 
-        self.right_motor_dir = 16
-        self.right_motor_pwm = 26
+        self.right_motor_dir = 6
+        self.right_motor_pwm = 5
 
-        self.left_encoder_a = 17
-        self.left_encoder_b = 27
+        self.left_encoder_a = 27
+        self.left_encoder_b = 22
 
-        self.right_encoder_a = 23
-        self.right_encoder_b = 24
+        self.right_encoder_a = 10
+        self.right_encoder_b = 9
 
         # Pin Enable
 
@@ -42,9 +42,9 @@ class PIDController(Node): # MODIFY NAME
         # Assigning parameter values
         self.ppr = 400  # Pulses Per Revolution of the encoder
         self.tstop = 20  # Loop execution duration (s)
-        self.tsample = 0.05  # Sampling period for code execution (s)
-        self.kp = 2
-        self.ki = 10
+        self.tsample = 0.02  # Sampling period for code execution (s)
+        self.kp = 0.278 #0.278
+        self.ki = 4 #2
         self.kd = 0
 
 
@@ -106,8 +106,8 @@ class PIDController(Node): # MODIFY NAME
         self.rpm_R_prev = self.rpm_R
 
         # signal u
-        eL = target_L - self.rpm_L_fil
-        eR = target_R - self.rpm_R_fil
+        eL = (target_L - self.rpm_L_fil)
+        eR = (target_R - self.rpm_R_fil)
 
         self.dedt_L = (eL-self.eL_prev)/self.tdiff_L
         self.dedt_R = (eR-self.eR_prev)/self.tdiff_R
@@ -115,10 +115,10 @@ class PIDController(Node): # MODIFY NAME
         self.eintegral_L = self.eintegral_L + eL*self.tdiff_L
         self.eintegral_R = self.eintegral_R + eR*self.tdiff_R
 
-        uL = (self.kp*eL + self.ki*self.eintegral_L + self.kd*self.dedt_L)/1000
-        uR = (self.kp*eR + self.ki*self.eintegral_R + self.kd*self.dedt_R)/1000
+        uL = (self.kp*eL + self.ki*self.eintegral_L + self.kd*self.dedt_L)/255
+        uR = (self.kp*eR + self.ki*self.eintegral_R + self.kd*self.dedt_R)/255
 
-        print(self.rpm_R_fil, "       |       ", self.rpm_L_fil)
+        print(self.rpm_L_fil, " ", self.tcurr_L," ", self.rpm_R_fil," ",self.tcurr_R)
             
         self.eL_prev = eL
         self.eR_prev = eR
@@ -128,7 +128,7 @@ class PIDController(Node): # MODIFY NAME
                 uL = 1
             self.med_bot_L.forward(uL)
         else:
-            uL = -uL
+            uL = np.abs(uL)
             if uL > 1:
                 uL = 1
             self.med_bot_L.backward(uL)
@@ -138,7 +138,7 @@ class PIDController(Node): # MODIFY NAME
                 uR = 1
             self.med_bot_R.forward(uR)
         else:
-            uR = -uR
+            uR = np.abs(uR)
             if uR > 1:
                 uR = 1
             self.med_bot_R.backward(uR)
@@ -151,44 +151,44 @@ class PIDController(Node): # MODIFY NAME
 
         if np.abs(right_wheel_vel) == np.abs(left_wheel_vel):
             if right_wheel_vel > 0 and left_wheel_vel > 0:
-                print ("--Go FORWARD--")
-                target_L = 40
-                target_R = 40
+                # print ("--Go FORWARD--")
+                target_L = 83
+                target_R = 83
             elif right_wheel_vel < 0 and left_wheel_vel < 0:
-                print ("--Go BACKWARD--")
-                target_L = -40
-                target_R = -40
+                # print ("--Go BACKWARD--")
+                target_L = -83
+                target_R = -83
             elif right_wheel_vel > 0 and left_wheel_vel < 0:
-                print ("--TURN RIGHT--")
+                # print ("--TURN RIGHT--")
                 target_L = 40
                 target_R = -40
             elif right_wheel_vel < 0 and left_wheel_vel > 0:
-                print ("--TURN LEFT--")
+                # print ("--TURN LEFT--")
                 target_L = -40
                 target_R = 40
             else:
-                print("--STOP--")
+                # print("--STOP--")
                 target_L = 0
                 target_R = 0
         else:
             if right_wheel_vel > 0 and left_wheel_vel > 0:
                 if right_wheel_vel > left_wheel_vel:
-                    print ("--TURN RIGHT A BIT FORWARD--")
-                    target_L = 40
-                    target_R = 20
-                else :
-                    print ("--TURN LEFT A BIT FORWARD--")
-                    target_L = 20
+                    # print ("--TURN RIGHT A BIT FORWARD--")
+                    target_L = 83
                     target_R = 40
+                else :
+                    # print ("--TURN LEFT A BIT FORWARD--")
+                    target_L = 40
+                    target_R = 83
             elif right_wheel_vel < 0 and left_wheel_vel < 0:
                 if right_wheel_vel > left_wheel_vel:
-                    print ("--TURN RIGHT A BIT BACKWARD--")
-                    target_L = -40
-                    target_R = -20
-                else :
-                    print ("--TURN LEFT A BIT BACKWARD--")
-                    target_L = -20                        
+                    # print ("--TURN RIGHT A BIT BACKWARD--")
+                    target_L = -83
                     target_R = -40
+                else :
+                    # print ("--TURN LEFT A BIT BACKWARD--")
+                    target_L = -40                      
+                    target_R = -83
         
         self.pwm_drive(target_L,target_R)
 

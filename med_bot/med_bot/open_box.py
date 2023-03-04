@@ -15,10 +15,10 @@ class OpenBox(Node):  # MODIFY NAME
             Joy, "joy", self.open_box_callback, 10)
         self.get_logger().info("--Open Box Node has been started--")
         #PIN NUMBER
-        self.servo1_pin = 12
-        self.servo2_pin = 16
-        self.servo3_pin = 20
-        self.servo4_pin = 21
+        self.servo1_pin = 2
+        self.servo2_pin = 3
+        self.servo3_pin = 4
+        self.servo4_pin = 17
 
         #GPIO SETUP
         GPIO.setmode(GPIO.BCM)

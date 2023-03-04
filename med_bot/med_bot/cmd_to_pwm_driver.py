@@ -36,29 +36,29 @@ class VelocitySubscriber(Node):  # MODIFY NAME
 
     def forward(self,vel_R,vel_L):
         print("forward")
-        self.pwm_r.ChangeDutyCycle(vel_R*100)
-        self.pwm_l.ChangeDutyCycle(vel_L*100)
+        self.pwm_r.ChangeDutyCycle(0.5)
+        self.pwm_l.ChangeDutyCycle(0.5)
         GPIO.output(self.right_motor_dir ,GPIO.LOW)
         GPIO.output(self.left_motor_dir,GPIO.LOW)
 
     def reverse(self,vel_R,vel_L):
         print("reverse")
-        self.pwm_r.ChangeDutyCycle(vel_R*100)
-        self.pwm_l.ChangeDutyCycle(vel_L*100)
+        self.pwm_r.ChangeDutyCycle(0.5)
+        self.pwm_l.ChangeDutyCycle(0.5)
         GPIO.output(self.right_motor_dir ,GPIO.HIGH)
         GPIO.output(self.left_motor_dir,GPIO.HIGH)
 
     def left(self,vel_R,vel_L):
         print("left")
-        self.pwm_r.ChangeDutyCycle(vel_R*100)
-        self.pwm_l.ChangeDutyCycle(vel_L*100)
+        self.pwm_r.ChangeDutyCycle(0.5)
+        self.pwm_l.ChangeDutyCycle(0.5)
         GPIO.output(self.right_motor_dir, GPIO.LOW)
         GPIO.output(self.left_motor_dir,GPIO.HIGH)
 
     def right(self,vel_R,vel_L):
         print("right")
-        self.pwm_r.ChangeDutyCycle(vel_R*100)
-        self.pwm_l.ChangeDutyCycle(vel_L*100)
+        self.pwm_r.ChangeDutyCycle(0.5)
+        self.pwm_l.ChangeDutyCycle(0.5)
         GPIO.output(self.right_motor_dir, GPIO.HIGH)
         GPIO.output(self.left_motor_dir,GPIO.LOW)
 

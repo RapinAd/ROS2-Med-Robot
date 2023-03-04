@@ -4,17 +4,18 @@ import time
 from gpiozero import PhaseEnableMotor, RotaryEncoder
 
 # Define Pin
-left_motor_dir = 5
-left_motor_pwm = 6
+left_motor_dir = 26
+left_motor_pwm = 13
 
-right_motor_dir = 16
-right_motor_pwm = 26
+right_motor_dir = 6
+right_motor_pwm = 5
 
-left_encoder_a = 17
-left_encoder_b = 27
 
-right_encoder_a = 23
-right_encoder_b = 24
+left_encoder_a = 27
+left_encoder_b = 22
+
+right_encoder_a = 10
+right_encoder_b = 9
 
 # Pin Enable
 med_bot_L = PhaseEnableMotor(left_motor_dir, left_motor_pwm)
@@ -28,8 +29,8 @@ tstop = 20  # Loop execution duration (s)
 tsample = 0.02  # Sampling period for code execution (s)
 target_L = -83
 target_R = 83
-kp = 0.1
-ki = 15
+kp = 1
+ki = 0
 
 
 # Global Variable
@@ -61,12 +62,15 @@ tstart = time.perf_counter()
 while tcurr_L <= tstop and tcurr_R <= tstop:
     time.sleep(tsample)
     if tcurr_L <= tstop/3:
-        target_L = -83
-        target_R = 83
-    elif tcurr_L <= 2*tstop/3:
+        print ("11111111111111111111111111111111")
         target_L = 83
         target_R = 83
+    elif tcurr_L <= 2*tstop/3:
+        print ("2222222222222222222222222222222")
+        target_L = -83
+        target_R = 83
     else:
+        print ("3333333333333333333333333333333")
         target_L = 83
         target_R = -83
     step_curr_L = encoderL.steps
@@ -104,6 +108,8 @@ while tcurr_L <= tstop and tcurr_R <= tstop:
 
     print(target_L, "       |       ", target_R)
     print(rpm_L_fil, "       |       ", rpm_R_fil)
+    print(eL, "       |       ", eR)
+    print(uL,"           |           ",uR)
 
 
 
@@ -112,7 +118,7 @@ while tcurr_L <= tstop and tcurr_R <= tstop:
             uL = 1
         med_bot_L.forward(uL)
     else:
-        uL = -uL
+        uL = np.abs(uL)
         if uL > 1:
             uL = 1
         med_bot_L.backward(uL)
@@ -122,7 +128,7 @@ while tcurr_L <= tstop and tcurr_R <= tstop:
             uR = 1
         med_bot_R.forward(uR)
     else:
-        uR = -uR
+        uR = np.abs(uR)
         if uR > 1:
             uR = 1
         med_bot_R.backward(uR)

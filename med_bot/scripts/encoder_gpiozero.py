@@ -12,7 +12,7 @@ tdisp = 0.5  # Sampling period for values display (s)
 
 
 
-encoder = RotaryEncoder(17, 27, max_steps=0)
+encoder = RotaryEncoder(10, 9, max_steps=0)
 
 # Initializing previous values and starting main clock
 anglecurr = 0

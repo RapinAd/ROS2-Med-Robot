@@ -5,17 +5,18 @@ import plotext as plt
 from gpiozero import PhaseEnableMotor , RotaryEncoder
 
 #Define Pin
-left_motor_dir = 16
-left_motor_pwm = 26
+left_motor_dir = 26
+left_motor_pwm = 13
 
-right_motor_dir = 5
-right_motor_pwm = 6
+right_motor_dir = 6
+right_motor_pwm = 5
 
-left_encoder_a = 17
-left_encoder_b = 27
 
-right_encoder_a = 23
-right_encoder_b = 24
+left_encoder_a = 27
+left_encoder_b = 22
+
+right_encoder_a = 10
+right_encoder_b = 9
 
 #Pin Enable
 
@@ -27,7 +28,7 @@ med_bot_L = PhaseEnableMotor(left_motor_dir, left_motor_pwm)
 # Assigning parameter values
 ppr = 400  # Pulses Per Revolution of the encoder
 tstop = 20  # Loop execution duration (s)
-tsample = 0.05  # Sampling period for code execution (s)
+tsample = 0.1  # Sampling period for code execution (s)
 
 
 #Global Variable
@@ -93,8 +94,8 @@ while True:
     #     step_prev_R = step_curr_R
     # else:
     #     rpm_R = 0.0
-    med_bot_L.forward()
-    med_bot_R.forward()
+    med_bot_R.backward(0.6)
+
     print(rpm_L, "       |       ",rpm_R)
 
 
