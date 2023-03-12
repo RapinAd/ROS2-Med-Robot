@@ -48,7 +48,7 @@ class OpenBox(Node):  # MODIFY NAME
         print("Box is opening")
         duty = 12
         servo.start(duty)
-        while duty >= 8.65:
+        while duty >= 8:
             servo.ChangeDutyCycle(duty)
             duty = duty - 0.1
             time.sleep(0.02)
@@ -57,7 +57,7 @@ class OpenBox(Node):  # MODIFY NAME
 
     def close(self, servo):
         print("Box is closing")
-        duty = 8.65
+        duty = 8
         servo.start(duty)
         while duty <= 12:
             servo.ChangeDutyCycle(duty)
@@ -72,10 +72,10 @@ class OpenBox(Node):  # MODIFY NAME
         button3_status = msg.buttons[2]
         button4_status = msg.buttons[3]
 
-        print("Button 1 Status: ", button1_status, "    |    Box 1 Status: ", self.box1_status)
-        print("Button 2 Status: ", button2_status, "    |    Box 1 Status: ", self.box2_status)
-        print("Button 3 Status: ", button3_status, "    |    Box 1 Status: ", self.box3_status)
-        print("Button 4 Status: ", button4_status, "    |    Box 1 Status: ", self.box4_status)
+        # print("Button 1 Status: ", button1_status, "    |    Box 1 Status: ", self.box1_status)
+        # print("Button 2 Status: ", button2_status, "    |    Box 1 Status: ", self.box2_status)
+        # print("Button 3 Status: ", button3_status, "    |    Box 1 Status: ", self.box3_status)
+        # print("Button 4 Status: ", button4_status, "    |    Box 1 Status: ", self.box4_status)
 
         if button1_status == 1 and self.box1_status == 0:
             self.open(self.servo1) #status 0 --> close, 1 --> open

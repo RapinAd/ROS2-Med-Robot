@@ -44,7 +44,7 @@ class PIDController(Node): # MODIFY NAME
         self.tstop = 20  # Loop execution duration (s)
         self.tsample = 0.02  # Sampling period for code execution (s)
         self.kp = 0.278 #0.278
-        self.ki = 4 #2
+        self.ki = 2 #2
         self.kd = 0
 
 
@@ -118,7 +118,7 @@ class PIDController(Node): # MODIFY NAME
         uL = (self.kp*eL + self.ki*self.eintegral_L + self.kd*self.dedt_L)/255
         uR = (self.kp*eR + self.ki*self.eintegral_R + self.kd*self.dedt_R)/255
 
-        print(self.rpm_L_fil, " ", self.tcurr_L," ", self.rpm_R_fil," ",self.tcurr_R)
+        #print(self.rpm_L_fil, " ", self.tcurr_L," ", self.rpm_R_fil," ",self.tcurr_R)
             
         self.eL_prev = eL
         self.eR_prev = eR
